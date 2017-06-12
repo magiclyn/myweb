@@ -128,3 +128,5 @@ print(STATICFILES_DIRS)
 
 # 执行python manage.py collectstatic 会将所有STATICFILES_DIRS目录下文件拷贝到STATIC_ROOT目录
 # STATIC_ROOT
+
+# add
