@@ -19,4 +19,10 @@ from . import view
 
 urlpatterns = [
     url(r'^$', view.hello),
+    url(r'^contact', view.contact),
+    url(r'^index.html', view.hello),
+    url(r'^description.htm', view.description),
+    url(r'^features.html', view.features),
+    url(r'^pricing.html', view.pricing),
+    url(r'^tour.html', view.tour),
 ]

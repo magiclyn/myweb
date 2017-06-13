@@ -122,7 +122,8 @@ STATIC_ROOT = os.path.join(os.path.dirname(__file__),'static')
 
 print(STATIC_ROOT)
 
-STATICFILES_DIRS = (os.path.join(BASE_DIR,'static/images'),)
+STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),
+)
 
 print(STATICFILES_DIRS)
 
