@@ -1,9 +1,14 @@
 from django.shortcuts import render
+from django.http import HttpResponse 
  
 def hello(request):
-    context          = {}
-    context['hello'] = 'Hello World!'
-    return render(request, 'moban/index.html', context)
+	if request.method == 'POST':
+		pass
+	else:
+		 return HttpResponse("You didn't give a favorite color.")
+    # context          = {}
+    # context['hello'] = 'Hello World!'
+    # return render(request, 'moban/index.html', context)
 
 def contact(request):
     context          = {}
