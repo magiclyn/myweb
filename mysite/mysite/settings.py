@@ -135,3 +135,5 @@ print(STATICFILES_DIRS)
 # add
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
+# https://docs.djangoproject.com/en/1.11/intro/tutorial05/
