@@ -28,4 +28,6 @@ urlpatterns = [
 
     url(r'^(?P<question_id>[0-9]+)/vote/$',views.vote,name='vote'), 
 
+    url(r'^getname',views.get_name,name='getname'), 
+
 ] 
