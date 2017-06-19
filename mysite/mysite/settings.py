@@ -137,3 +137,10 @@ print(STATICFILES_DIRS)
 # STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 
 # https://docs.djangoproject.com/en/1.11/intro/tutorial05/
+
+
+SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
+
+AUTHENTICATION_BACKENDS = (
+    'polls.auth.UsernamePasswordAuth',
+)

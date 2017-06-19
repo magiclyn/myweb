@@ -8,7 +8,9 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import generic
 from .forms import NameForm,UserForm,UserFormLogin
-
+from django.contrib.sessions.models import Session
+from django.contrib import auth 
+from .auth import UsernamePasswordAuth
 import datetime
 import time
 import pdb
@@ -118,9 +120,88 @@ def register(request):
         uf = UserForm()
     return render(request,'polls/register.html',{'uf':uf})
 
-def login(request):  
+
+
+
+
+
+
+def login2(request):
+    
+    if request.user.is_authenticated():
+        print("11")
+        response = render(request,'polls/success.html',{'operation':"成功"})
+        response.set_cookie('lucky_num','1')
+        return response
+    if request.method == "POST":
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        
+        user = auth.authenticate(username=username, password=password)
+        print("22")
+        if user is not None and user.is_active:
+            print("33")
+            auth.login(request, user)
+            response = render(request,'polls/success.html',{'operation':"成功"})
+            response.set_cookie('lucky_num','1')
+        else:
+            print("44")
+            uf = UserFormLogin()
+            request.session['numbera'] = 110
+            response = render(request,"polls/userlogin.html",{'uf':uf})
+            return response
+    else:
+        uf = UserFormLogin()
+        request.session['numbera'] = 110
+        response = render(request,"polls/userlogin.html",{'uf':uf})
+    return response
+
+
+
+
+def login3(request):
+    
+    if request.user.is_authenticated():
+        print("11")
+        response = render(request,'polls/success.html',{'operation':"成功"})
+        response.set_cookie('lucky_num','1')
+        return response
+    if request.method == "POST":
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        
+        user = auth.authenticate(username=username, password=password)
+        print("22")
+        if user is not None and user.is_active:
+            print("33")
+            auth.login(request, user)
+            response = render(request,'polls/success.html',{'operation':"成功"})
+            response.set_cookie('lucky_num','1')
+        else:
+            print("44")
+            uf = UserFormLogin()
+            request.session['numbera'] = 110
+            response = render(request,"polls/userlogin.html",{'uf':uf})
+            return response
+    else:
+        uf = UserFormLogin()
+        request.session['numbera'] = 110
+        response = render(request,"polls/userlogin.html",{'uf':uf})
+    return response
+
+
+
+def login(request): 
+    ss =  "sessionid:"+str(request.session.session_key)
+    print(ss)
     if request.method == "POST":
         uf = UserFormLogin(request.POST)
+
+        if 'numbera' in request.session:
+            lucky_number = request.session['numbera']
+            print(lucky_number)
+        else:
+            print("no numbera")
         if uf.is_valid():
             #获取表单信息
             username = uf.cleaned_data['username']
@@ -131,10 +212,19 @@ def login(request):
                 return  HttpResponse("该用户不存在")
             else:
                 for user in userResult:
-                    if user.password == password:            
-                         return render(request,'polls/success.html',{'operation':"登录"})
+                    if user.password == password:
+
+                        sid = request.COOKIES['sessionid']
+                        s = Session.objects.get(pk=sid)
+                        s_info='Session ID' + sid + 'date:'+str(s.expire_date) + 'data:'+str(s.get_decoded())
+                        response = render(request,'polls/success.html',{'operation':s_info})
+                        response.set_cookie('lucky_num','1')
+                        return response
                 return  HttpResponse("密码错误")
                         
     else:
         uf = UserFormLogin()
-    return render(request,"polls/userlogin.html",{'uf':uf})
+        request.session['numbera'] = 110
+        response = render(request,"polls/userlogin.html",{'uf':uf})
+        
+    return response
