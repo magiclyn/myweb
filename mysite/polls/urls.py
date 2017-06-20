@@ -32,6 +32,7 @@ urlpatterns = [
 
     url(r'^register$',views.register),
 
-    url(r'^login$',views.login3)
+    url(r'^login$',views.login3,name='login'),
 
+    url(r'^logout$',views.logout,name='logout'),
 ] 

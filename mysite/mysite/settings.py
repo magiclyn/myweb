@@ -132,6 +132,8 @@ print(STATICFILES_DIRS)
 # 执行python manage.py collectstatic 会将所有STATICFILES_DIRS目录下文件拷贝到STATIC_ROOT目录
 # STATIC_ROOT
 
+
+# http://opslinux.com/2014/04/20/Django%E8%87%AA%E5%AE%9A%E4%B9%89%E7%94%A8%E6%88%B7%E7%B3%BB%E7%BB%9F/
 # add
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "static/")
@@ -144,3 +146,8 @@ SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 AUTHENTICATION_BACKENDS = (
     'polls.auth.UsernamePasswordAuth',
 )
+
+
+
+
+AUTH_USER_MODEL = 'polls.User'

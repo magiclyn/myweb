@@ -14,6 +14,8 @@ from .auth import UsernamePasswordAuth
 import datetime
 import time
 import pdb
+from django.shortcuts import redirect  
+
 # def index(request):
 # 	latest_question_list = Question.objects.order_by('-pub_date')#[:5]
 # 	template = loader.get_template('polls/index.html')
@@ -159,6 +161,7 @@ def login2(request):
 
 
 
+
 def login3(request):
     
     if request.user.is_authenticated():
@@ -172,7 +175,8 @@ def login3(request):
         
         user = auth.authenticate(username=username, password=password)
         print("22")
-        if user is not None and user.is_active:
+        # print('user'+user)
+        if user is not None:# and user.is_active:
             print("33")
             auth.login(request, user)
             response = render(request,'polls/success.html',{'operation':"成功"})
@@ -188,6 +192,7 @@ def login3(request):
         request.session['numbera'] = 110
         response = render(request,"polls/userlogin.html",{'uf':uf})
     return response
+
 
 
 
@@ -228,3 +233,9 @@ def login(request):
         response = render(request,"polls/userlogin.html",{'uf':uf})
         
     return response
+
+def logout(request):
+    if request.user.is_authenticated():
+        auth.logout(request)
+    return redirect(reverse('polls:login', args=[]))  
+    # return HttpResponse(reverse('polls:results',args=(question.id,)))
