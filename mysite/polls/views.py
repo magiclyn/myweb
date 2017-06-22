@@ -2,19 +2,21 @@ from django.shortcuts import render
 
 # Create your views here.
 from django.http import HttpResponse,HttpResponseRedirect
-from .models import Question,Choice,User
+from .models import Question,Choice,User,PhotoAlbum
 from django.template import loader
 from django.shortcuts import get_object_or_404
 from django.urls import reverse
 from django.views import generic
-from .forms import NameForm,UserForm,UserFormLogin
+from .forms import NameForm,UserForm,UserFormLogin,UploadForm
 from django.contrib.sessions.models import Session
 from django.contrib import auth 
 from .auth import UsernamePasswordAuth
+
 import datetime
 import time
 import pdb
 from django.shortcuts import redirect  
+from django.utils import timezone
 
 # def index(request):
 # 	latest_question_list = Question.objects.order_by('-pub_date')#[:5]
@@ -62,6 +64,9 @@ class DetailView(generic.DetailView):
 class ResultsView(generic.DetailView):
 	model = Question
 	template_name = 'polls/results.html'
+
+
+
 
 
 
@@ -121,6 +126,7 @@ def register(request):
     else:
         uf = UserForm()
     return render(request,'polls/register.html',{'uf':uf})
+
 
 
 
@@ -196,6 +202,8 @@ def login3(request):
 
 
 
+
+
 def login(request): 
     ss =  "sessionid:"+str(request.session.session_key)
     print(ss)
@@ -239,3 +247,23 @@ def logout(request):
         auth.logout(request)
     return redirect(reverse('polls:login', args=[]))  
     # return HttpResponse(reverse('polls:results',args=(question.id,)))
+
+def  upLoad(request):
+    if request.method == 'POST':
+        form = UploadForm(request.POST, request.FILES)  # 有文件上传要传如两个字段
+        if form.is_valid():
+            m = PhotoAlbum.objects.create(user = request.user,title='',upload_date=timezone.now())
+            m.user = User.objects.get(pk=request.user.id)
+            m.img = form.cleaned_data['image']
+            m.save()
+        return HttpResponse("uploade ok")
+    else:
+        uf = UploadForm()
+
+        pics = PhotoAlbum.objects.all()
+        for p in pics:
+            print(p.img)
+            print(p.img.url)
+        print(pics)
+        return render(request,"polls/upload.html",{'uf':uf,'pics':pics})
+

@@ -35,4 +35,7 @@ urlpatterns = [
     url(r'^login$',views.login3,name='login'),
 
     url(r'^logout$',views.logout,name='logout'),
+
+    url(r'^upload$',views.upLoad,name='upload'),
+    
 ] 

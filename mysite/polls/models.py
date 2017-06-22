@@ -3,7 +3,7 @@ import datetime
 from django.utils import timezone
 
 from django.contrib.auth.models import (
-	BaseUserManager, AbstractBaseUser,PermissionsMixin
+	BaseUserManager, AbstractBaseUser,PermissionsMixin,AbstractUser
 	)
 
 
@@ -59,10 +59,12 @@ class Choice(models.Model):
 		return self.choice_text
 
 
-class User(AbstractBaseUser):
+class User(AbstractUser):
 	username = models.CharField(max_length=50,unique=True)
 	password = models.CharField(max_length=50)
 	email = models.EmailField()
+
+
 
 	objects = UserManager()
 
@@ -73,6 +75,15 @@ class User(AbstractBaseUser):
 
 	def check_password(self,pwd):
 		return self.password == pwd
+
+class PhotoAlbum(models.Model):
+	user = models.ForeignKey(User,on_delete = models.CASCADE)
+	title = models.CharField(max_length=50)
+	img = models.ImageField(upload_to='img',default='user1.jpg')
+	# path = models.CharField(max_length=100)
+	upload_date = models.DateTimeField('date upload')
+
+
 
 
 

@@ -1,0 +1,9 @@
+<form action="{% url 'polls:upload' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+    {{uf}}
+    <input type="submit" value="Submit" />
+</form>
+{% for photo in pics %}  
+<h3><p class="greentitle"> {{photo.title}} </p></h3>  
+	<a href="{{photo.img.url}}"><img  src="{{photo.img.url}}" alt="{{photo.img.url}}"></img></a>  
+{% endfor %}  

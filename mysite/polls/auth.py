@@ -5,8 +5,6 @@ from .models import User
 
 
 
-
-
 class UsernamePasswordAuth(object):
 
     def authenticate(self, username=None, password=None):
@@ -32,6 +30,7 @@ class UsernamePasswordAuth(object):
             return user
         except User.DoesNotExist:
             return None
+
 
 
 

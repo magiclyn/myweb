@@ -64,10 +64,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # 'django.template.context_processors.media',
             ],
         },
     },
 ]
+
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
@@ -123,11 +125,17 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(os.path.dirname(__file__),'static')
 
 print(STATIC_ROOT)
+print(BASE_DIR)
 
 STATICFILES_DIRS = (os.path.join(BASE_DIR,'static'),
 )
 
 print(STATICFILES_DIRS)
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+
+MEDIA_URL = '/media/'
+print(MEDIA_ROOT)
 
 # 执行python manage.py collectstatic 会将所有STATICFILES_DIRS目录下文件拷贝到STATIC_ROOT目录
 # STATIC_ROOT
@@ -144,10 +152,20 @@ print(STATICFILES_DIRS)
 SESSION_SERIALIZER = 'django.contrib.sessions.serializers.PickleSerializer'
 
 AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',
     'polls.auth.UsernamePasswordAuth',
 )
 
 
 
 
+
+
+
+
+
+
 AUTH_USER_MODEL = 'polls.User'
+
+
+# django/contrib/auth

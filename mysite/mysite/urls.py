@@ -18,7 +18,18 @@ from django.contrib import admin
 from django.conf.urls import include
 from . import views
 
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
+    # (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+    #     'document_root': settings.MEDIA_ROOT
+    #     }),
+    # (r'^media/(?P<path>.*)$', 'django.views.static.serve', {
+    # 'document_root': settings.MEDIA_ROOT
+    #     }),
+
+
     url(r'^admin/', admin.site.urls),
     url(r'^$', views.hello),
     url(r'^contact', views.contact),
@@ -28,4 +39,7 @@ urlpatterns = [
     url(r'^pricing.html', views.pricing),
     url(r'^tour.html', views.tour),
     url(r'^polls/',include('polls.urls'))
-]
+]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
